@@ -1,0 +1,48 @@
+package it.prova.datarest.service;
+
+import it.prova.datarest.HeroRepository;
+import it.prova.datarest.model.Hero;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+
+    @Service
+    @Transactional
+    public class HeroServiceImpl implements HeroService {
+
+        @Autowired
+        private HeroRepository repository;
+
+        @Override
+        public List<Hero> listAll() {
+            return (List<Hero>) repository.findAll();
+        }
+
+        @Override
+        public Hero caricaSingoloElemeno(Long id) {
+            return repository.findById(id).orElse(null);
+        }
+
+        @Override
+        public Hero aggiorna(Hero heroInstance) {
+            return repository.save(heroInstance);
+        }
+
+        @Override
+        public Hero inserisciNuovo(Hero heroInstance) {
+            return repository.save(heroInstance);
+        }
+
+        @Override
+        public void rimuovi(Hero heroInstance) {
+            repository.delete(heroInstance);
+        }
+
+        @Override
+        public List<Hero> trovaByNome(String name) {
+            return repository.findByName(name);
+        }
+}
